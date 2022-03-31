@@ -1,17 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>{{ message }}</div>
+    <div>{{ user.name }}</div>
+    <div>{{ nameOfUser }}</div>
+    <button @click="increaseNumber()">InNumber</button>
+    <button @click="decreaseNumber()">DeNumber</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {},
+  data() {
+    return {
+      message: 'Hello Viet Nam',
+      numberCounter: 10,
+      user: {
+        name: 'Nguyen Van A',
+        age: 20
+      }
+    }
+  },
+  computed: {
+    nameOfUser() {
+      const {name} = this.user//ES6
+      return name;
+    }
+  },
+  watch: {
+    numberCounter(newValue, oldValue) {
+      console.log("old Value"+oldValue);
+      console.log("new Value"+newValue);
+    }
+  },
+  methods: {
+    increaseNumber() {
+      this.numberCounter++;
+    },
+    decreaseNumber() {
+      this.numberCounter--;
+    }
   }
 }
 </script>

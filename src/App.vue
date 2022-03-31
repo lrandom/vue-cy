@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div>{{ message }}</div>
+    <div>{{ message | toUpperCase }}</div>
+    <div>{{money | formatMoney}}</div>
     <div>{{ user.name }}</div>
     <div>{{ nameOfUser }}</div>
     <button @click="increaseNumber()">InNumber</button>
@@ -15,7 +16,8 @@ export default {
   components: {},
   data() {
     return {
-      message: 'Hello Viet Nam',
+      money:1000000,
+      message: 'Test Application 1',
       numberCounter: 10,
       user: {
         name: 'Nguyen Van A',
@@ -42,6 +44,9 @@ export default {
     decreaseNumber() {
       this.numberCounter--;
     }
+  },
+  mounted() {
+    alert("Test");
   }
 }
 </script>

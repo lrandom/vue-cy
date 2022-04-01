@@ -1,105 +1,243 @@
 <template>
-  <div id="app">
-    <h2>List Products</h2>
-    <div v-for="(productItem,productIndex) in products" :key="productIndex">
-      <img :src="productItem.image" :alt="productItem.name">
-      <h3>{{ productItem.name }}</h3>
-      <div>{{ productItem.price }}</div>
-      <div v-if="productItem.price>=maxPrice">Expensive</div>
-      <div v-else>Cheap</div>
+  <div id="may_tinh">
+    <div id="ket_qua">
+      <div style="    position: absolute;
+    top: 0;" class="hien_so">
+      </div>
+      <div id="ket_qua_cu" style="width:100%">
+        <div style="border:1px solid #cdcdcd;height:35px;width:100%">
+          {{ result }}
+        </div>
+      </div>
     </div>
-
-    <h2>Hot Products</h2>
-    <div v-for="(productItem,productIndex) in hotProducts" :key="productIndex">
-      <img :src="productItem.image" :alt="productItem.name">
-      <h3>{{ productItem.name }}</h3>
-      <div>{{ productItem.price }}</div>
-    </div>
-
-    <p>Payment Methods</p>
-    <div v-for="(paymentItem,paymentIndex) in paymentMethods" :key="paymentIndex">
-      <label>
-        <span>{{ paymentItem.text }}</span>
-        <input type="radio" :id="paymentItem.value" v-model="selectPaymentMethod" :value="paymentItem.value">
-      </label>
-
-
+    <div id="ban_phim">
+      <div id="ban_phim">
+        <button class="he_thong" @click="getInput('C')" id="xoa_tat_ca">C</button>
+        <button class="he_thong" @click="getInput('/')" id="/">÷</button>
+        <button class="con_so" @click="getInput(7)" id="7">7</button>
+        <button class="con_so" @click="getInput(8)" id="8">8</button>
+        <button class="con_so" @click="getInput(9)" id="9">9</button>
+        <button class="he_thong" @click="getInput('*')" id="*">×</button>
+        <button class="con_so" @click="getInput(4)" id="4">4</button>
+        <button class="con_so" @click="getInput(5)" id="5">5</button>
+        <button class="con_so" @click="getInput(6)" id="6">6</button>
+        <button class="he_thong" @click="getInput('-')" id="-">-</button>
+        <button class="con_so" @click="getInput(1)" id="1">1</button>
+        <button class="con_so" @click="getInput(2)" id="2">2</button>
+        <button class="con_so" @click="getInput(3)" id="3">3</button>
+        <button class="he_thong" @click="getInput('+')" id="+">+</button>
+        <button class="trong" id="trong"></button>
+        <button class="con_so" @click="getInput(0)" id="0">0</button>
+        <button class="trong" id="trong"></button>
+        <button class="he_thong" @click="getInput('=')" id="=">=</button>
+      </div>
     </div>
 
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  components: {},
+  name: 'HelloWorld',
   data() {
     return {
-      selectPaymentMethod: 2,
-      cart: [],
-      products: [
-        {
-          id: 1,
-          name: "PS5",
-          price: 5555,
-          publicDate: "05-05-2021",
-          image:
-              "https://cdn.vjshop.vn/hightech/may-choi-game/ps5/sony-ps-5-1.jpg",
-          hot: true,
-        },
-        {
-          id: 2,
-          name: "PS4",
-          price: 4444,
-          publicDate: "04-04-2021",
-          image:
-              "https://gmedia.playstation.com/is/image/SIEPDC/ps4-slim-image-block-01-en-24jul20?$native--t$",
-          hot: true,
-        },
-        {
-          id: 3,
-          name: "PS3",
-          price: 3333,
-          publicDate: "03-03-2021",
-          image:
-              "https://game.haloshop.vn/image/catalog/blogs/ps3-co-con-dang-mua/ps3-co-con-dang-mua-21.jpg",
-          hot: false,
-        },
-      ],
-      paymentMethods: [
-        {text: "COD", value: 1},
-        {text: "Banking", value: 2},
-        {text: "Ứng dụng bên thứ 3", value: 3},
-      ],
-      selectedPayment: 2,
-    };
-  },
-  computed: {
-    hotProducts() {
-      return this.products.filter(productItem => productItem.hot)
-    },
-    maxPrice() {
-      return Math.max(...this.products.map(productItem => productItem.price));
+      result: '',
+      operationName: null,
+      numberOne: null,
+      numberTwo: null
     }
   },
-  watch:{
-    selectPaymentMethod(newVal,oldVal) {
-      if (newVal != oldVal) {
-        alert("You are changed payment method");
+  methods: {
+    getInput(inputValue) {
+      if (inputValue == '+') {
+        this.operationName = '+';
+        return;
+      }
+      if (inputValue == '-') {
+        this.operationName = '-';
+        return;
+      }
+      if (inputValue == '/') {
+        this.operationName = '/';
+        return;
+      }
+      if (inputValue == '*') {
+        this.operationName = '*';
+        return;
+      }
+
+      if (!this.operationName && !isNaN(inputValue)) {
+        this.result = '';
+        this.numberOne = !this.numberOne ? inputValue : this.numberOne + '' + inputValue;
+        this.result = this.numberOne;
+        return;
+      }
+
+      if (this.numberOne >= 0 && this.operationName && !isNaN(inputValue)) {
+        this.result = '';
+        this.numberTwo = !this.numberTwo ? inputValue : this.numberTwo + '' + inputValue;
+        this.result = this.numberTwo;
+        return;
+      }
+
+      if (inputValue == '=') {
+        switch (this.operationName) {
+          case '+':
+            this.result = parseInt(this.numberOne) +  parseInt(this.numberTwo);
+            break;
+          case '-':
+            this.result =  parseInt(this.numberOne) -  parseInt(this.numberTwo);
+            break
+          case '*':
+            this.result = parseInt( this.numberOne) *  parseInt(this.numberTwo);
+            break
+          case '/':
+            this.result =  parseInt(this.numberOne)/  parseInt(this.numberTwo);
+            break
+        }
+        this.numberOne = null;
+        this.numberTwo = null;
+        this.operationName = null;
+        return;
+      }
+      if (inputValue == 'C') {
+        this.numberOne = null;
+        this.numberTwo = null;
+        this.operationName = null;
+        this.result = null;
       }
     }
-  }
+  },
+  computed: {}
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+
+<style scoped>
+#ket_qua {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  padding: 10px;
+  border: none;
+  box-shadow: 0 0 5px #ccc;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.he_thong,
+.con_so,
+.trong {
+  width: 50px;
+  height: 50px;
+  margin: 15px;
+  float: left;
+  border-radius: 50%;
+  border-width: 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.con_so,
+.trong {
+  background-color: #eaedef;
+}
+
+.he_thong,
+.con_so {
+  cursor: pointer;
+}
+
+.he_thong:active,
+.con_so:active {
+  font-size: 13px;
+}
+
+.he_thong:focus,
+.con_so:focus,
+.trong:focus {
+  outline: 0;
+}
+
+button {
+  transition: background 0.8s;
+}
+
+button:hover {
+  background: #000;
+  color: #fff;
+}
+
+button:nth-child(4) {
+  font-size: 20px;
+  background-color: #20b2aa;
+}
+
+button:nth-child(8) {
+  font-size: 20px;
+  background-color: #ffa500;
+}
+
+button:nth-child(12) {
+  font-size: 20px;
+  background-color: #f08080;
+}
+
+button:nth-child(16) {
+  font-size: 20px;
+  background-color: #7d93e0;
+}
+
+button:nth-child(20) {
+  font-size: 20px;
+  background-color: #9477af;
+}
+
+body {
+  font-family: Roboto;
+  background: #373B44;
+  background: -webkit-linear-gradient(to right, #4286f4, #373B44);
+  background: linear-gradient(to right, #4286f4, #373B44);
+}
+
+#may_tinh {
+  width: 320px;
+  height: 520px;
+  background-color: #eaedef;
+  top: 20px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#ket_qua {
+  height: 120px;
+}
+
+#ket_qua_cu {
+  text-align: right;
+  height: 20px;
+  margin: 0 20px;
+  padding-top: 20px;
+  font-size: 15px;
+  color: #919191;
+}
+
+#xuat_ket_qua {
+  text-align: right;
+  height: 60px;
+  margin: 10px 20px;
+  font-size: 30px;
+}
+
+#ban_phim {
+  height: 400px;
 }
 </style>

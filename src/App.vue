@@ -1,11 +1,42 @@
 <template>
   <div id="app">
-    <div>{{ message | toUpperCase }}</div>
-    <div>{{money | formatMoney}}</div>
-    <div>{{ user.name }}</div>
-    <div>{{ nameOfUser }}</div>
-    <button @click="increaseNumber()">InNumber</button>
-    <button @click="decreaseNumber()">DeNumber</button>
+    <div v-if="isRender">Content</div>
+    <div v-show="isRender">Content</div>
+    <button @click="isRender=!isRender">Toggle</button>
+
+    <div v-for="(item,index) in pupils" :key="index">
+      {{item}}
+    </div>
+
+    <div v-text="content"></div>
+    <div v-html="contentHTML"></div>
+
+
+    <input type="text" v-model="fullName"/>
+
+    <form>
+      {{phone}}
+      <input type="text" v-model.trim="phone" placeholder="phone"/>
+    </form>
+    {{fullName}}
+    <button @click="changeFullName()">Change FullName</button>
+
+    {{checkBox}}
+    <input type="checkbox" value="Hà Nội" v-model="checkBox"/>
+    <input type="checkbox" value="Quảng Ninh" v-model="checkBox"/>
+    <input type="checkbox" value="Hải Phòng" v-model="checkBox"/>
+
+    <input type="radio" value="Hà Nội" v-model="radioButton">
+    <input type="radio" value="Hải Phòng" v-model="radioButton">
+    <input type="radio" value="Quảng Ninh" v-model="radioButton">
+    {{radioButton}}
+
+    {{select}}
+    <select v-model="select">
+      <option value="Hà Nội">hà Nội</option>
+      <option value="Hải Phòng">HP</option>
+      <option value="Quảng Ninh">QN</option>
+    </select>
   </div>
 </template>
 
@@ -16,37 +47,28 @@ export default {
   components: {},
   data() {
     return {
-      money:1000000,
-      message: 'Test Application 1',
-      numberCounter: 10,
-      user: {
-        name: 'Nguyen Van A',
-        age: 20
-      }
-    }
-  },
-  computed: {
-    nameOfUser() {
-      const {name} = this.user//ES6
-      return name;
-    }
-  },
-  watch: {
-    numberCounter(newValue, oldValue) {
-      console.log("old Value"+oldValue);
-      console.log("new Value"+newValue);
-    }
-  },
-  methods: {
-    increaseNumber() {
-      this.numberCounter++;
-    },
-    decreaseNumber() {
-      this.numberCounter--;
+      select:'',
+      radioButton:'',
+      checkBox:[],
+      fullName: '',
+      phone:'',
+      isRender: false,
+      pupils:[
+          "Hiếu",
+          "Miên",
+          "Tiến",
+          "Duy"
+      ],
+      content:"Lorem Ipsum Dolor",
+      contentHTML:"<strong>Strong name</strong>"
     }
   },
   mounted() {
-    alert("Test");
+  },
+  methods:{
+    changeFullName() {
+      this.fullName = "Nguyễn Thành Nam";
+    }
   }
 }
 </script>

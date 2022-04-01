@@ -1,42 +1,31 @@
 <template>
   <div id="app">
-    <div v-if="isRender">Content</div>
-    <div v-show="isRender">Content</div>
-    <button @click="isRender=!isRender">Toggle</button>
-
-    <div v-for="(item,index) in pupils" :key="index">
-      {{item}}
+    <h2>List Products</h2>
+    <div v-for="(productItem,productIndex) in products" :key="productIndex">
+      <img :src="productItem.image" :alt="productItem.name">
+      <h3>{{ productItem.name }}</h3>
+      <div>{{ productItem.price }}</div>
+      <div v-if="productItem.price>=maxPrice">Expensive</div>
+      <div v-else>Cheap</div>
     </div>
 
-    <div v-text="content"></div>
-    <div v-html="contentHTML"></div>
+    <h2>Hot Products</h2>
+    <div v-for="(productItem,productIndex) in hotProducts" :key="productIndex">
+      <img :src="productItem.image" :alt="productItem.name">
+      <h3>{{ productItem.name }}</h3>
+      <div>{{ productItem.price }}</div>
+    </div>
+
+    <p>Payment Methods</p>
+    <div v-for="(paymentItem,paymentIndex) in paymentMethods" :key="paymentIndex">
+      <label>
+        <span>{{ paymentItem.text }}</span>
+        <input type="radio" :id="paymentItem.value" v-model="selectPaymentMethod" :value="paymentItem.value">
+      </label>
 
 
-    <input type="text" v-model="fullName"/>
+    </div>
 
-    <form>
-      {{phone}}
-      <input type="text" v-model.trim="phone" placeholder="phone"/>
-    </form>
-    {{fullName}}
-    <button @click="changeFullName()">Change FullName</button>
-
-    {{checkBox}}
-    <input type="checkbox" value="Hà Nội" v-model="checkBox"/>
-    <input type="checkbox" value="Quảng Ninh" v-model="checkBox"/>
-    <input type="checkbox" value="Hải Phòng" v-model="checkBox"/>
-
-    <input type="radio" value="Hà Nội" v-model="radioButton">
-    <input type="radio" value="Hải Phòng" v-model="radioButton">
-    <input type="radio" value="Quảng Ninh" v-model="radioButton">
-    {{radioButton}}
-
-    {{select}}
-    <select v-model="select">
-      <option value="Hà Nội">hà Nội</option>
-      <option value="Hải Phòng">HP</option>
-      <option value="Quảng Ninh">QN</option>
-    </select>
   </div>
 </template>
 
@@ -47,27 +36,58 @@ export default {
   components: {},
   data() {
     return {
-      select:'',
-      radioButton:'',
-      checkBox:[],
-      fullName: '',
-      phone:'',
-      isRender: false,
-      pupils:[
-          "Hiếu",
-          "Miên",
-          "Tiến",
-          "Duy"
+      selectPaymentMethod: 2,
+      cart: [],
+      products: [
+        {
+          id: 1,
+          name: "PS5",
+          price: 5555,
+          publicDate: "05-05-2021",
+          image:
+              "https://cdn.vjshop.vn/hightech/may-choi-game/ps5/sony-ps-5-1.jpg",
+          hot: true,
+        },
+        {
+          id: 2,
+          name: "PS4",
+          price: 4444,
+          publicDate: "04-04-2021",
+          image:
+              "https://gmedia.playstation.com/is/image/SIEPDC/ps4-slim-image-block-01-en-24jul20?$native--t$",
+          hot: true,
+        },
+        {
+          id: 3,
+          name: "PS3",
+          price: 3333,
+          publicDate: "03-03-2021",
+          image:
+              "https://game.haloshop.vn/image/catalog/blogs/ps3-co-con-dang-mua/ps3-co-con-dang-mua-21.jpg",
+          hot: false,
+        },
       ],
-      content:"Lorem Ipsum Dolor",
-      contentHTML:"<strong>Strong name</strong>"
+      paymentMethods: [
+        {text: "COD", value: 1},
+        {text: "Banking", value: 2},
+        {text: "Ứng dụng bên thứ 3", value: 3},
+      ],
+      selectedPayment: 2,
+    };
+  },
+  computed: {
+    hotProducts() {
+      return this.products.filter(productItem => productItem.hot)
+    },
+    maxPrice() {
+      return Math.max(...this.products.map(productItem => productItem.price));
     }
   },
-  mounted() {
-  },
-  methods:{
-    changeFullName() {
-      this.fullName = "Nguyễn Thành Nam";
+  watch:{
+    selectPaymentMethod(newVal,oldVal) {
+      if (newVal != oldVal) {
+        alert("You are changed payment method");
+      }
     }
   }
 }

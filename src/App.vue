@@ -1,243 +1,261 @@
 <template>
-  <div id="may_tinh">
-    <div id="ket_qua">
-      <div style="    position: absolute;
-    top: 0;" class="hien_so">
-      </div>
-      <div id="ket_qua_cu" style="width:100%">
-        <div style="border:1px solid #cdcdcd;height:35px;width:100%">
-          {{ result }}
+  <div class="wrapper">
+    <div class="products">
+      <div v-for="(productItem,productIndex) in transformProducts" :key="productIndex" class="product-item">
+        <img :src="productItem.thumb" :alt="productItem.name">
+        <h3>{{ productItem.name }}</h3>
+        <div>{{ productItem.price }}</div>
+        <div>{{ productItem.description }}</div>
+        <div>
+          colors:
+          <span role="button" v-for="(colorItem,colorIndex) in productItem.colors" :key="colorIndex"
+                :style="{backgroundColor: colorItem.code}"
+                @click="colorItemClick(productItem.id,colorItem)"
+                class="color-item"
+          >
+        </span>
+        </div>
+        <div>
+          {{productItem.disableAddToCartButton}}
+          <button role="button" :disabled="productItem.disableAddToCartButton">Add To Cart</button>
         </div>
       </div>
     </div>
-    <div id="ban_phim">
-      <div id="ban_phim">
-        <button class="he_thong" @click="getInput('C')" id="xoa_tat_ca">C</button>
-        <button class="he_thong" @click="getInput('/')" id="/">÷</button>
-        <button class="con_so" @click="getInput(7)" id="7">7</button>
-        <button class="con_so" @click="getInput(8)" id="8">8</button>
-        <button class="con_so" @click="getInput(9)" id="9">9</button>
-        <button class="he_thong" @click="getInput('*')" id="*">×</button>
-        <button class="con_so" @click="getInput(4)" id="4">4</button>
-        <button class="con_so" @click="getInput(5)" id="5">5</button>
-        <button class="con_so" @click="getInput(6)" id="6">6</button>
-        <button class="he_thong" @click="getInput('-')" id="-">-</button>
-        <button class="con_so" @click="getInput(1)" id="1">1</button>
-        <button class="con_so" @click="getInput(2)" id="2">2</button>
-        <button class="con_so" @click="getInput(3)" id="3">3</button>
-        <button class="he_thong" @click="getInput('+')" id="+">+</button>
-        <button class="trong" id="trong"></button>
-        <button class="con_so" @click="getInput(0)" id="0">0</button>
-        <button class="trong" id="trong"></button>
-        <button class="he_thong" @click="getInput('=')" id="=">=</button>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
   data() {
     return {
-      result: '',
-      operationName: null,
-      numberOne: null,
-      numberTwo: null
+      transformProducts: [],
+      products: [{
+        thumb: "http://placeimg.com/640/480",
+        name: "Fantastic Fresh Hat",
+        description: "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+        price: 151,
+        id: 1,
+        hot: false,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 0
+        }, {
+          name: "White",
+          code: "#ffffff",
+          quantity: 4
+        }
+        ],
+        count: 0
+      }, {
+        thumb: "http://placeimg.com/640/480",
+        name: "Gorgeous Fresh Bike",
+        description: "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+        price: 288,
+        id: 2,
+        hot: true,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 2
+        },
+          {
+            name: "White",
+            code: "#ffffff",
+            quantity: 4
+          }
+        ],
+        count: 0
+      }, {
+        thumb: "http://placeimg.com/640/480",
+        name: "Intelligent Wooden Shirt",
+        description: "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+        price: 343,
+        id: 3,
+        hot: true,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 2
+        },
+          {
+            name: "White",
+            code: "#ffffff",
+            quantity: 4
+          }
+        ],
+        count: 0
+      }, {
+        thumb: "http://placeimg.com/640/480",
+        name: "Intelligent Plastic Salad",
+        description: "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+        price: "753.00",
+        id: 4,
+        hot: true,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 2
+        },
+          {
+            name: "White",
+            code: "#ffffff",
+            quantity: 4
+          }
+        ],
+        count: 0
+      }, {
+        thumb: "http://placeimg.com/640/480",
+        name: "Rustic Steel Bike",
+        description: "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+        price: 988,
+        id: 5,
+        hot: false,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 2
+        },
+          {
+            name: "White",
+            code: "#ffffff",
+            quantity: 4
+          }
+        ],
+        count: 0
+
+      }, {
+        thumb: "http://placeimg.com/640/480",
+        name: "Awesome Steel Ball",
+        description: "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+        price: 642,
+        id: 6,
+        hot: true,
+        brand: "Nike",
+        release: "2018-01-01",
+        colors: [{
+          name: "Black",
+          code: "#000000",
+          quantity: 2
+        },
+          {
+            name: "White",
+            code: "#ffffff",
+            quantity: 4
+          }
+        ],
+        count: 0
+      }]//end products
     }
+  },
+  mounted() {
+    this.transformProducts = this.products.map((item) => {
+      item.disableAddToCartButton = false;
+      return item;
+    })
   },
   methods: {
-    getInput(inputValue) {
-      if (inputValue == '+') {
-        this.operationName = '+';
-        return;
-      }
-      if (inputValue == '-') {
-        this.operationName = '-';
-        return;
-      }
-      if (inputValue == '/') {
-        this.operationName = '/';
-        return;
-      }
-      if (inputValue == '*') {
-        this.operationName = '*';
-        return;
-      }
-
-      if (!this.operationName && !isNaN(inputValue)) {
-        this.result = '';
-        this.numberOne = !this.numberOne ? inputValue : this.numberOne + '' + inputValue;
-        this.result = this.numberOne;
-        return;
-      }
-
-      if (this.numberOne >= 0 && this.operationName && !isNaN(inputValue)) {
-        this.result = '';
-        this.numberTwo = !this.numberTwo ? inputValue : this.numberTwo + '' + inputValue;
-        this.result = this.numberTwo;
-        return;
-      }
-
-      if (inputValue == '=') {
-        switch (this.operationName) {
-          case '+':
-            this.result = parseInt(this.numberOne) +  parseInt(this.numberTwo);
-            break;
-          case '-':
-            this.result =  parseInt(this.numberOne) -  parseInt(this.numberTwo);
-            break
-          case '*':
-            this.result = parseInt( this.numberOne) *  parseInt(this.numberTwo);
-            break
-          case '/':
-            this.result =  parseInt(this.numberOne)/  parseInt(this.numberTwo);
-            break
+    colorItemClick(productId, colorItem) {
+      this.transformProducts = this.transformProducts.map(productItem => {
+        if (productId == productItem.id && colorItem.quantity <= 0) {
+          productItem.disableAddToCartButton = true;
+          console.log(productItem);
+        }else{
+          productItem.disableAddToCartButton = false;
         }
-        this.numberOne = null;
-        this.numberTwo = null;
-        this.operationName = null;
-        return;
-      }
-      if (inputValue == 'C') {
-        this.numberOne = null;
-        this.numberTwo = null;
-        this.operationName = null;
-        this.result = null;
-      }
+        return productItem;
+      })
     }
   },
-  computed: {}
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-
-<style scoped>
-#ket_qua {
+<style>
+.wrapper .product {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 2rem;
+  border: #00b894 1px solid;
+  margin: 5px;
+  padding: 5px;
+}
+
+.wrapper .product .image-inner,
+.list-to-buy .product .image-inner {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.wrapper .product .image-inner img,
+.list-to-buy .product .image-inner img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper .product .content-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 60%;
+  padding-right: 20%;
+}
+
+.wrapper .product .add-to-cart {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  width: 20%;
 }
 
-input {
-  padding: 10px;
-  border: none;
-  box-shadow: 0 0 5px #ccc;
-  border-radius: 10px;
-  padding: 16px 20px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.he_thong,
-.con_so,
-.trong {
-  width: 50px;
-  height: 50px;
-  margin: 15px;
-  float: left;
-  border-radius: 50%;
-  border-width: 0;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.con_so,
-.trong {
-  background-color: #eaedef;
-}
-
-.he_thong,
-.con_so {
-  cursor: pointer;
-}
-
-.he_thong:active,
-.con_so:active {
-  font-size: 13px;
-}
-
-.he_thong:focus,
-.con_so:focus,
-.trong:focus {
-  outline: 0;
-}
-
-button {
-  transition: background 0.8s;
-}
-
-button:hover {
-  background: #000;
+.wrapper .product .add-to-cart button {
+  background-color: #00b894;
   color: #fff;
-}
-
-button:nth-child(4) {
-  font-size: 20px;
-  background-color: #20b2aa;
-}
-
-button:nth-child(8) {
-  font-size: 20px;
-  background-color: #ffa500;
-}
-
-button:nth-child(12) {
-  font-size: 20px;
-  background-color: #f08080;
-}
-
-button:nth-child(16) {
-  font-size: 20px;
-  background-color: #7d93e0;
-}
-
-button:nth-child(20) {
-  font-size: 20px;
-  background-color: #9477af;
-}
-
-body {
-  font-family: Roboto;
-  background: #373B44;
-  background: -webkit-linear-gradient(to right, #4286f4, #373B44);
-  background: linear-gradient(to right, #4286f4, #373B44);
-}
-
-#may_tinh {
-  width: 320px;
-  height: 520px;
-  background-color: #eaedef;
-  top: 20px;
-  margin: 0 auto;
-  position: relative;
+  padding: 0.5rem 1rem;
+  border: none;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  width: 120px;
+  height: 80px;
 }
 
-#ket_qua {
-  height: 120px;
+ul {
+  list-style: none;
+  border: #00b894 1px solid;
 }
 
-#ket_qua_cu {
-  text-align: right;
-  height: 20px;
-  margin: 0 20px;
-  padding-top: 20px;
-  font-size: 15px;
-  color: #919191;
+.total {
+  display: flex;
+  justify-content: space-between;
 }
 
-#xuat_ket_qua {
-  text-align: right;
-  height: 60px;
-  margin: 10px 20px;
-  font-size: 30px;
+.color-item {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 2px solid #cccc;
 }
 
-#ban_phim {
-  height: 400px;
+.product-item {
+  margin-top: 10px
 }
 </style>

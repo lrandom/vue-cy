@@ -26,7 +26,19 @@
     </div>
 
     <div class="cart">
+      <div v-for="(cartItem,cartItemIndex) in cart" :key="cartItemIndex">
+        <h3>{{ cartItem.productItem.name }}</h3>
+        <div>
+          {{ cartItem.productItem.price }}x
 
+          <div style="display: flex;justify-content: center;align-items: center">
+            <button role="button" @click="updateQuantity(cartItemIndex,-1)">-</button>
+            <input :value="cartItem.quantity"/>
+            <button @click="updateQuantity(cartItemIndex,1)">+</button>
+          </div>
+        </div>
+        <div>Color: {{ cartItem.colorItem.name }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +49,7 @@
 export default {
   data() {
     return {
+      cart: [],
       thumbOfProductHoverColor: '',
       selectedColor: null,
       transformProducts: [],
@@ -195,6 +208,13 @@ export default {
       item.disableAddToCartButton = false;
       return item;
     })
+
+    try {
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+    } catch (e) {
+      this.cart = [];
+    }
+
   },
   methods: {
     colorItemClick(productId, colorItem) {
@@ -228,13 +248,17 @@ export default {
       })
     },
     addToCart(productItem) {
+      if (!this.selectedColor) {
+        alert("Chọn màu bạn ei");
+        return;
+      }
       const _addToCart = (cart, productItem) => {
         cart.push({
           productItem,
           quantity: 1,
-          colorItem:this.selectedColor
+          colorItem: this.selectedColor
         })
-      }
+      };
       let cart = localStorage.getItem("cart");
       if (!cart) {
         cart = [];
@@ -248,18 +272,39 @@ export default {
         }
         * */
         cart = JSON.parse(cart);
-        const findIndex = cart.findIndex(item => item?.productItem.id == productItem.id);
+        const findIndex = cart.findIndex(item => (item?.productItem.id == productItem.id
+            && this.selectedColor.code == item?.colorItem.code));
         if (findIndex > -1) {
           //tăng số lượng
-          cart.find(item => item.productItem.id == productItem.id).quantity++;
+          cart.find(item => (item.productItem.id == productItem.id)
+              && this.selectedColor.code == item?.colorItem.code).quantity++;
         } else {
           //sp chưa có trong giỏ hàng
           _addToCart(cart, productItem);
         }
       }
       localStorage.setItem('cart', JSON.stringify(cart));
+      this.selectedColor = null;
+      this.cart = cart;
+    },
+    updateQuantity(cartItemIndex, quantityUnit) {
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      /*   this.cart = this.cart.map((item, index) => {
+           if (index == cartItemIndex) {
+             item.quantity+=quantityUnit;
+           }
+           return item;
+         })*/
+      if (this.cart[cartItemIndex].quantity + quantityUnit <=0) {
+        this.cart.splice(cartItemIndex, 1);
+        localStorage.setItem("cart", JSON.stringify(this.cart));
+        return;
+      }
+      this.cart[cartItemIndex].quantity += quantityUnit;
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     }
   },
+
 }
 </script>
 

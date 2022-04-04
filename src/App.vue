@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="products">
       <div v-for="(productItem,productIndex) in transformProducts" :key="productIndex" class="product-item">
-        <img :src="productItem.thumb" :alt="productItem.name">
+        <img :src="productItem.thumb" style="width: 180px;height: 200px" :alt="productItem.name">
         <h3>{{ productItem.name }}</h3>
         <div>{{ productItem.price }}</div>
         <div>{{ productItem.description }}</div>
@@ -10,24 +10,35 @@
           colors:
           <span role="button" v-for="(colorItem,colorIndex) in productItem.colors" :key="colorIndex"
                 :style="{backgroundColor: colorItem.code}"
+                @mouseenter="changeImageProduct(productItem.id,colorItem.thumb)"
+                @mouseleave="resetImageProduct(productItem.id)"
                 @click="colorItemClick(productItem.id,colorItem)"
-                class="color-item"
-          >
+                class="color-item">
         </span>
         </div>
         <div>
-          {{productItem.disableAddToCartButton}}
-          <button role="button" :disabled="productItem.disableAddToCartButton">Add To Cart</button>
+          {{ productItem.disableAddToCartButton }}
+          <button @click="addToCart(productItem)" role="button" :disabled="productItem.disableAddToCartButton">Add To
+            Cart
+          </button>
         </div>
       </div>
+    </div>
+
+    <div class="cart">
+
     </div>
   </div>
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
+      thumbOfProductHoverColor: '',
+      selectedColor: null,
       transformProducts: [],
       products: [{
         thumb: "http://placeimg.com/640/480",
@@ -41,13 +52,14 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 0
+          quantity: 0,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
         }, {
           name: "White",
           code: "#ffffff",
-          quantity: 4
-        }
-        ],
+          quantity: 4,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+        }],
         count: 0
       }, {
         thumb: "http://placeimg.com/640/480",
@@ -61,12 +73,16 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 2
+          quantity: 2,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
         },
           {
             name: "White",
             code: "#ffffff",
-            quantity: 4
+            quantity: 4,
+            thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
           }
         ],
         count: 0
@@ -82,12 +98,16 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 2
+          quantity: 2,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
         },
           {
             name: "White",
             code: "#ffffff",
-            quantity: 4
+            quantity: 4,
+            thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
           }
         ],
         count: 0
@@ -103,12 +123,16 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 2
+          quantity: 2,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
         },
           {
             name: "White",
             code: "#ffffff",
-            quantity: 4
+            quantity: 4,
+            thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
           }
         ],
         count: 0
@@ -124,12 +148,16 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 2
+          quantity: 2,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
         },
           {
             name: "White",
             code: "#ffffff",
-            quantity: 4
+            quantity: 4,
+            thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
           }
         ],
         count: 0
@@ -146,12 +174,16 @@ export default {
         colors: [{
           name: "Black",
           code: "#000000",
-          quantity: 2
+          quantity: 2,
+          thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
         },
           {
             name: "White",
             code: "#ffffff",
-            quantity: 4
+            quantity: 4,
+            thumb: 'https://d1ka0itfguscri.cloudfront.net/U0QN/2022/01/04/22/53/c3Vf3MVo2Vi/thumb_45764.jpg'
+
           }
         ],
         count: 0
@@ -166,15 +198,66 @@ export default {
   },
   methods: {
     colorItemClick(productId, colorItem) {
+      this.selectedColor = colorItem;
       this.transformProducts = this.transformProducts.map(productItem => {
         if (productId == productItem.id && colorItem.quantity <= 0) {
           productItem.disableAddToCartButton = true;
           console.log(productItem);
-        }else{
+        } else {
           productItem.disableAddToCartButton = false;
         }
         return productItem;
       })
+    },
+    changeImageProduct(productId, thumbOfColorVariant) {
+      this.transformProducts = this.transformProducts.map(productItem => {
+        if (productId == productItem.id) {
+          this.thumbOfProductHoverColor = productItem.thumb;
+          productItem.thumb = thumbOfColorVariant;
+        }
+        return productItem;
+      })
+    },
+    resetImageProduct(productId) {
+      this.transformProducts = this.transformProducts.map(productItem => {
+        if (productId == productItem.id) {
+          productItem.thumb = this.thumbOfProductHoverColor;
+          this.thumbOfProductHoverColor = '';
+        }
+        return productItem;
+      })
+    },
+    addToCart(productItem) {
+      const _addToCart = (cart, productItem) => {
+        cart.push({
+          productItem,
+          quantity: 1,
+          colorItem:this.selectedColor
+        })
+      }
+      let cart = localStorage.getItem("cart");
+      if (!cart) {
+        cart = [];
+        _addToCart(cart, productItem);
+      } else {
+        /*
+        {
+           productItem,
+           quantity:1,
+           colorItem
+        }
+        * */
+        cart = JSON.parse(cart);
+        const findIndex = cart.findIndex(item => item?.productItem.id == productItem.id);
+        if (findIndex > -1) {
+          //tăng số lượng
+          cart.find(item => item.productItem.id == productItem.id).quantity++;
+        } else {
+          //sp chưa có trong giỏ hàng
+          _addToCart(cart, productItem);
+        }
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
   },
 }

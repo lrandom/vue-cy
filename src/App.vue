@@ -1,28 +1,21 @@
 <template>
   <div id="app">
-    <div>{{ message | toUpperCase }}</div>
-    <div>{{money | formatMoney}}</div>
-    <div>{{ user.name }}</div>
-    <div>{{ nameOfUser }}</div>
-    <button @click="increaseNumber()">InNumber</button>
-    <button @click="decreaseNumber()">DeNumber</button>
+    <CyVietNam v-if="loadComponent"></CyVietNam>
+    <button @click="loadComponent=!loadComponent">Load Component</button>
   </div>
 </template>
 
 <script>
+import CyVietNam from "./components/CyVietNam";
 
 export default {
   name: 'App',
-  components: {},
+  components: {
+    CyVietNam
+  },
   data() {
     return {
-      money:1000000,
-      message: 'Test Application 1',
-      numberCounter: 10,
-      user: {
-        name: 'Nguyen Van A',
-        age: 20
-      }
+      loadComponent: false
     }
   },
   computed: {
@@ -31,22 +24,7 @@ export default {
       return name;
     }
   },
-  watch: {
-    numberCounter(newValue, oldValue) {
-      console.log("old Value"+oldValue);
-      console.log("new Value"+newValue);
-    }
-  },
-  methods: {
-    increaseNumber() {
-      this.numberCounter++;
-    },
-    decreaseNumber() {
-      this.numberCounter--;
-    }
-  },
   mounted() {
-    alert("Test");
   }
 }
 </script>

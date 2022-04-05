@@ -1,20 +1,26 @@
 <template>
   <div id="app">
-    <CyVietNam v-if="loadComponent"></CyVietNam>
+    <CyVietNam v-if="loadComponent"
+               @conChoBoTien="_boLayTien"
+               :content="content"></CyVietNam>
+    <Hieu></Hieu>
     <button @click="loadComponent=!loadComponent">Load Component</button>
   </div>
 </template>
 
 <script>
 import CyVietNam from "./components/CyVietNam";
-
+import Hieu from "./components/Hieu";
 export default {
   name: 'App',
   components: {
+    Hieu,
     CyVietNam
   },
   data() {
     return {
+      title:'Nguyen Thanh Luan Viet Nam, Dai Viet boi, da vang anh kim',
+      content:'make Dai Viet great again',
       loadComponent: false
     }
   },
@@ -25,6 +31,12 @@ export default {
     }
   },
   mounted() {
+  },
+  methods:{
+    _boLayTien(money){
+      alert(money);
+      alert("Thank you very much");
+    }
   }
 }
 </script>

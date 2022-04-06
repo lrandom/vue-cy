@@ -6,7 +6,7 @@
        Hello. I am Child Component
       </slot>
 
-      <slot name="slot2" :content="content" :title="title">
+      <slot name="slot2" :content="content" :showMessage="showMessage" :title="title">
 
       </slot>
     </div>
@@ -19,7 +19,10 @@ export default {
   data: function () {
     return {
       content:'Child Component',
-      title:'I am title'
+      title:'I am title',
+      showMessage:function (){
+        alert("HIHI");
+      }
     }
   }
 }

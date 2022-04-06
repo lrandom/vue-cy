@@ -7,13 +7,14 @@
     <button @click="_sendData()">Con bo tien</button>
 
     <button @click="_sendDataViaEventBus()">Send Data via Event Bus</button>
+    <my-button></my-button>
+    <MySelect></MySelect>
   </div>
 </template>
 
 <script>
 import EventBus from "../event-bus";
 export default {
-
   data() {
     return {
       hello: "hi"

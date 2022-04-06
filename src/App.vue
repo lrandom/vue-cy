@@ -4,6 +4,8 @@
                @conChoBoTien="_boLayTien"
                :content="content"></CyVietNam>
     <Hieu></Hieu>
+
+    <MyButton></MyButton>
     <button @click="loadComponent=!loadComponent">Load Component</button>
   </div>
 </template>

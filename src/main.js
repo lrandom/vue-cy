@@ -3,22 +3,18 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-Vue.component('button',{
+Vue.component('MyButton',{
     data() {
         return{
-            buttonText:'Button'
+            buttonText:'myButton'
         }
     },
-    template:`<button>{{buttonText}}</button>`
+    template:'<button>{{buttonText}}</button>'
 })
 
-Vue.component('select',{
+Vue.component('MySelect',{
     template:`<select><option>Vui lòng chọn</option></select>`
 })
-
-new Vue({
-    render: h => h(App),
-}).$mount('#app')
 
 Vue.filter('toUpperCase', function (value) {
     return value.toUpperCase();
@@ -27,3 +23,9 @@ Vue.filter('toUpperCase', function (value) {
 Vue.filter('formatMoney', function (value) {
     return '$' + value.toFixed(2)
 })
+
+
+new Vue({
+    render: h => h(App),
+}).$mount('#app')
+

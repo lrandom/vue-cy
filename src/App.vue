@@ -1,23 +1,15 @@
 <template>
   <div id="app">
-    <CyVietNam v-if="loadComponent"
-               @conChoBoTien="_boLayTien"
-               :content="content"></CyVietNam>
-    <Hieu></Hieu>
-
-    <MyButton></MyButton>
-    <button @click="loadComponent=!loadComponent">Load Component</button>
+    <ParentComponent></ParentComponent>
   </div>
 </template>
 
 <script>
-import CyVietNam from "./components/CyVietNam";
-import Hieu from "./components/Hieu";
+import ParentComponent from "./components/ParentComponent";
 export default {
   name: 'App',
   components: {
-    Hieu,
-    CyVietNam
+    ParentComponent
   },
   data() {
     return {

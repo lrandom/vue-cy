@@ -1,20 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+import {myButton, mySelect} from "./g-components";
 
 Vue.config.productionTip = false
 
-Vue.component('MyButton',{
-    data() {
-        return{
-            buttonText:'myButton'
-        }
-    },
-    template:'<button>{{buttonText}}</button>'
-})
+Vue.component('MyButton',myButton)
 
-Vue.component('MySelect',{
-    template:`<select><option>Vui lòng chọn</option></select>`
-})
+Vue.component('MySelect',mySelect)
 
 Vue.filter('toUpperCase', function (value) {
     return value.toUpperCase();

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {config} from "./config";
 import ParentComponent from "./components/ParentComponent";
 export default {
   name: 'App',
@@ -25,6 +26,7 @@ export default {
     }
   },
   mounted() {
+    fetch(process.env.BASE_API+'home')//hard code
   },
   methods:{
     _boLayTien(money){

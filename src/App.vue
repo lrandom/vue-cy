@@ -51,6 +51,7 @@ export default {
       this.$router.back();//quay trở lại page trước
       this.$router.go(-1);//quay trở lại page trước
       this.$router.forward();//tiến tới trang sau
+      this.$router.push({name:'contact',query:{id:1}});
       return;
     }
   }

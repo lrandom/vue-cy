@@ -18,6 +18,16 @@ export const router = new VueRouter({
             path:'/dang-nhap',
             name:'login',
             component:()=>import('@/pages/Login.vue')
+        },
+        {
+            path:'/danh-sach-sp',
+            name:'list-product',
+            component:()=>import('@/pages/ListProduct.vue')
+        },
+        {
+            path:'/chi-tiet-san-pham',
+            name:'detail-product',
+            component:()=>import('@/pages/ProductDetail.vue')
         }
     ],
     mode: "history"

@@ -1,21 +1,33 @@
 <template>
-  <div id="app">
-    <Home></Home>
+  <div>
+    <router-link to="/">Home</router-link>
+    <router-link to="/lien-he">Contact</router-link>
+    <router-link to="/dang-nhap">Login</router-link>
+
+    <br>
+    <router-link :to="{name:'home'}">Home</router-link>
+    <router-link :to="{name:'contact'}">Contact</router-link>
+    <router-link :to="{name:'login'}">Login</router-link>
+
+    <br>
+    <router-link :to="{path:'/'}">Home</router-link>
+    <router-link :to="{path:'/lien-he'}">Contact</router-link>
+    <router-link :to="{path:'/dang-nhap'}">Login</router-link>
+
+    <router-view></router-view>
+
+    <button @click="_goToContactPage">Chuyển sang trang contact</button>
   </div>
 </template>
 
 <script>
-import Home from "./components/Home";
-import ParentComponent from "./components/ParentComponent";
 export default {
   name: 'App',
-  components: {
-    Home
-  },
+  components: {},
   data() {
     return {
-      title:'Nguyen Thanh Luan Viet Nam, Dai Viet boi, da vang anh kim',
-      content:'make Dai Viet great again',
+      title: 'Nguyen Thanh Luan Viet Nam, Dai Viet boi, da vang anh kim',
+      content: 'make Dai Viet great again',
       loadComponent: false
     }
   },
@@ -26,12 +38,20 @@ export default {
     }
   },
   mounted() {
-    fetch(process.env.BASE_API+'home')//hard code
+    fetch(process.env.BASE_API + 'home')//hard code
   },
-  methods:{
-    _boLayTien(money){
+  methods: {
+    _boLayTien(money) {
       alert(money);
       alert("Thank you very much");
+    },
+    _goToContactPage() {
+      //this.$router.push({name: 'contact'});
+      this.$router.replace({name: 'contact'});
+      this.$router.back();//quay trở lại page trước
+      this.$router.go(-1);//quay trở lại page trước
+      this.$router.forward();//tiến tới trang sau
+      return;
     }
   }
 }

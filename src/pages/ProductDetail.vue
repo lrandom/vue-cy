@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>CHi tiết sp</div>
-    {{productId}}
-    {{slug}}
+    {{ productId }}
+    {{ name }}
   </div>
 </template>
 
@@ -11,13 +11,13 @@ export default {
   name: "ProductDetail",
   data() {
     return {
-      productId:0,
-      slug:''
+      productId: 0,
+      name: ''
     }
   },
   mounted() {
-    this.productId = this.$route.query.id;
-    this.slug= this.$route.query.slug;
+    this.productId = this.$route.params.id;
+    this.name = this.$route.params.name;
   }
 }
 </script>

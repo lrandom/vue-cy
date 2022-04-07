@@ -25,9 +25,13 @@ export const router = new VueRouter({
             component:()=>import('@/pages/ListProduct.vue')
         },
         {
-            path:'/chi-tiet-san-pham',
+            path:'/chi-tiet-san-pham/:id/:name',
             name:'detail-product',
             component:()=>import('@/pages/ProductDetail.vue')
+        },
+        {
+            path:'*',
+            component:()=>import('@/pages/NotFound.vue')
         }
     ],
     mode: "history"

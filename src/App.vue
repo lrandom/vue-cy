@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <ParentComponent></ParentComponent>
+    <Home></Home>
   </div>
 </template>
 
 <script>
-import {config} from "./config";
+import Home from "./components/Home";
 import ParentComponent from "./components/ParentComponent";
 export default {
   name: 'App',
   components: {
-    ParentComponent
+    Home
   },
   data() {
     return {

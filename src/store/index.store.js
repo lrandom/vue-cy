@@ -1,9 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import {homeService} from "../services/homeService";
+import {homeStore} from "./home.store";
+import {cartStore} from "./cart.store";
 
 Vue.use(Vuex);
 
+/*
 export const store = new Vuex.Store({
         state: {
             count: 0,
@@ -32,5 +35,11 @@ export const store = new Vuex.Store({
         }
     }
 )
+*/
 
-
+export const store = new Vuex.Store({
+    modules: {
+        home: homeStore,
+        cart: cartStore
+    }
+});

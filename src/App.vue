@@ -17,12 +17,16 @@
         <router-view></router-view>
 
         <button @click="_goToContactPage">Chuyển sang trang contact</button>-->
-    <ControlCounter></ControlCounter>
+<!--    <ControlCounter></ControlCounter>
     <DisplayCounter></DisplayCounter>
     <DisplayHomeProduct></DisplayHomeProduct>
     <button @click="$store.dispatch('loadHomeProducts')">Get Home Product</button>
     <button @click="loadHomeProducts()">Get Home Product</button>
     <button @click="_setHuman()">Set Human</button>
+    -->
+    <div>
+      {{$store.state.home.homeData}}
+    </div>
   </div>
 </template>
 
@@ -30,14 +34,14 @@
 import DisplayHomeProduct from "./components/DisplayHomeProduct";
 import ControlCounter from "./components/ControlCounter";
 import DisplayCounter from "./components/DisplayCounter";
-import {mapActions, mapMutations} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   name: 'App',
   components: {
-    DisplayHomeProduct,
-    ControlCounter,
-    DisplayCounter
+   // DisplayHomeProduct,
+   // ControlCounter,
+    //DisplayCounter
   },
   data() {
     return {
@@ -50,7 +54,9 @@ export default {
     nameOfUser() {
       const {name} = this.user//ES6
       return name;
-    }
+    },
+    ...mapState('home', ['homeData']),
+    ...mapState('cart', ['cartData'])
   },
   mounted() {
     fetch(process.env.BASE_API + 'home')//hard code

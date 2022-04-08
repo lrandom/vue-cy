@@ -3,6 +3,7 @@
     <h1>Display Counter Component</h1>
     {{ $store.state.count }}
     {{ count }}
+    {{ $store.state.human }}
   </div>
 </template>
 

@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
         state: {
             count: 0,
-            homeProducts:[]
+            homeProducts: [],
+            human: {}
         },
         mutations: {
             increment(state) {
@@ -18,12 +19,15 @@ export const store = new Vuex.Store({
             },
             setHomeProducts(state, products) {
                 state.homeProducts = products;
+            },
+            setHuman(state, payload) {
+                state.human = payload
             }
         },
-        actions:{
+        actions: {
             async loadHomeProducts({commit}) {
                 const resp = await homeService.getHome();
-                commit('setHomeProducts',resp.data);
+                commit('setHomeProducts', resp.data);
             }
         }
     }

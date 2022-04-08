@@ -22,6 +22,24 @@ function getInstance() {
         headers: getHeaders()
     })
     //hook interceptor cài ở đây
+    axiosInstance.interceptors.request.use(config => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    })
+
+    axiosInstance.interceptors.response.use(response => {
+        return response;
+    }, error => {
+        if (error.response.status === 401) {
+            localStorage.removeItem('token');
+            alert('Bạn phải đăng nhập để truy cập vào api này');
+            window.location.href = '/dang-nhap';
+        }
+        return Promise.reject(error);
+    })
     return axiosInstance;
 }
 

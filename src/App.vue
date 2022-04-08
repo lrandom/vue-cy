@@ -19,15 +19,19 @@
     <button @click="_goToContactPage">Chuyển sang trang contact</button>-->
     <ControlCounter></ControlCounter>
     <DisplayCounter></DisplayCounter>
+    <DisplayHomeProduct></DisplayHomeProduct>
+    <button @click="$store.dispatch('loadHomeProducts')">Get Home Product</button>
   </div>
 </template>
 
 <script>
+import DisplayHomeProduct from "./components/DisplayHomeProduct";
 import ControlCounter from "./components/ControlCounter";
 import DisplayCounter from "./components/DisplayCounter";
 export default {
   name: 'App',
   components: {
+    DisplayHomeProduct,
     ControlCounter,
     DisplayCounter
   },

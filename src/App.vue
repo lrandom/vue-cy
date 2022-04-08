@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/">Home</router-link>
+<!--    <router-link to="/">Home</router-link>
     <router-link to="/lien-he">Contact</router-link>
     <router-link to="/dang-nhap">Login</router-link>
 
@@ -16,14 +16,21 @@
 
     <router-view></router-view>
 
-    <button @click="_goToContactPage">Chuyển sang trang contact</button>
+    <button @click="_goToContactPage">Chuyển sang trang contact</button>-->
+    <ControlCounter></ControlCounter>
+    <DisplayCounter></DisplayCounter>
   </div>
 </template>
 
 <script>
+import ControlCounter from "./components/ControlCounter";
+import DisplayCounter from "./components/DisplayCounter";
 export default {
   name: 'App',
-  components: {},
+  components: {
+    ControlCounter,
+    DisplayCounter
+  },
   data() {
     return {
       title: 'Nguyen Thanh Luan Viet Nam, Dai Viet boi, da vang anh kim',
